@@ -1,13 +1,18 @@
 <?php
     session_start();
+    $_COOKIE['message'] += 1;
+    setcookie('message', $_COOKIE['message']);
+
+    echo $_COOKIE['message'];
+
 ?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-    <meta name="author" content="Jacques Chirac">
-    <title>Hedi MOKRANI Web développeur Nfactory design site html css </title>
+
+    <title>design site html css </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -22,6 +27,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
     <link rel="stylesheet" href="https://anijs.github.io/lib/anicollection/anicollection.css" />
+
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
+
+
+
 </head>
 
 
@@ -30,121 +41,131 @@
     <main class="container">
 
         <div class="row">
-
-
-
             <header>
-
-                <nav class="navbar">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a href="#">
-                                Entrade
-                            </a>
-                        </div>
-                        <ul class="nav navbar-nav">
-
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <input type="search" placeholder="Search">
-                            </li>
-                            <li style="margin:0px 10px;">
-                                <?php
-                                    include_once './button/button1.php';
-                                ?>
-                            </li>
-                            <li  style="margin:0px 10px;">
-
-                                <?php
-                                    include_once './button/button2.php';
-                                ?>
-
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                
-
-
-                <div class="tag col-xs-12">
-                    <ul>
-                    <a href="">
-                        <li class="col-sm-2 col-xs-12 ">TRENDING</li>
-                    </a>
-                    <a href="">
-                        <li class="col-sm-2 col-xs-12 ">FOOD</li>
-                    </a>
-                    <a href="">
-                        <li class="col-sm-2 col-xs-12 ">MONEY</li>
-                    </a>
-                    <a href="">
-                        <li class="col-sm-2 col-xs-12">FUN</li>
-                    </a>
-                    <a href="">
-                        <li class="col-sm-2 col-xs-12">TECHNOLOGY</li>
-                    </a>
-                    <a href="">
-                        <li class="col-sm-2 col-xs-12">TRAVEL</li>
-                    </a>
-                    </ul>
-                </div>
-
-
-
-
+                <?php include_once '../html/header.php'; ?>
             </header>
-
-        </div>
-        <div class="wrapper">
-
-            <div class="pop-up">
-                <div class="pop-up-text">
-                    <div class="container-fluid">
-                        <form id="form" method="POST" action="./login.php">
-
-                            
-                            <input class="col-xs-12" name='email' id="email" type="text" placeholder="Pseudo ou E-MAIL">
-                            <input class="col-xs-12" name='mdp' id="PASSWORD" type="text" placeholder="PASSWORD">
-
-                            <input class="col-xs-12" id="submit" type="submit" value="GO!">
-
-                        </form>
-                    </div> 
-                </div>
-            </div>
         </div>
 
         <?php
-            include_once './formArticle.php';
-            include_once './afficheArticle.php';
+            if(!$_SESSION['login']) {
+                echo ('
+                    <div class="wrapper">
+
+                        <div class="pop-up">
+                            <div class="pop-up-text">
+                                <div class="container-fluid">
+                                    <form id="form" method="POST" action="./login.php">
+            
+                                        
+                                        <input class="col-xs-12" name=\'email\' id="email" type="text" placeholder="Pseudo ou E-MAIL">
+                                        <input class="col-xs-12" name=\'MDP\' id="PASSWORD" type="text" placeholder="PASSWORD">
+            
+                                        <input class="col-xs-12" id="submit" type="submit" value="GO!">
+                                        <a href="./oublier.php">Mot de passe oublié ? </a>
+            
+                                    </form>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-two" style="display:none">
+             
+                       <div class="pop-up-two">
+                           <div class="pop-up-text">
+                               <div class="container-fluid">
+                                   <form id="form" method="POST" action="./signup.php">
+            
+                                       <input class="col-xs-12" name=pseudo id="pseudo" type="text" placeholder="PSEUDO">
+                                       <input class="col-xs-12" name=email id="email" type="text" placeholder="E-MAIL">
+                                       <input class="col-xs-12" name=MDP id="PASSWORD" type="text" placeholder="PASSWORD">
+                                       <input class="col-xs-12" name=MDP id="PASSWORD" type="text" placeholder="REPEAT PASSWORD">
+                                       <input class="col-xs-12" id="submit" type="submit" value="REGISTER">
+            
+                                    </form>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                ');
+            } else {
+                echo ('
+                <div class="wrapper">
+
+                        <div class="pop-up">
+                            <div class="pop-up-text">
+                                <div class="container-fluid">
+                                    <form id="form" method="POST" action="./article.php">
+            
+                                        
+                                        <input class="col-xs-12" name=\'titre\' id="titre" type="text" placeholder="titre">
+                                        <label><input type="checkbox" name="categorie[]" value="trending">Trending</label>
+                                        <label><input type="checkbox" name="categorie[]" value="food">Food</label>
+                                        <label><input type="checkbox" name="categorie[]" value="money">Money</label>
+                                        <label><input type="checkbox" name="categorie[]" value="fun">Fun</label> 
+                                        <label><input type="checkbox" name="categorie[]" value="Technology">Technology</label>
+                                        <label><input type="checkbox" name="categorie[]" value="Travel">Travel</label>
+                                                                                 
+                                   
+                                        <textarea class="col-xs-12" name=\'contenu\' id="contenu"> </textarea>
+                                      
+            
+                                        <input class="col-xs-12" id="submit" type="submit" value="Publier !">
+            
+                                    </form>
+                                </div> 
+                            </div>
+                        </div>
+                </div>
+                
+                <div class="wrapper-two" style="display:none">
+             
+                       <div class="pop-up-two">
+                           <div class="pop-up-text">
+                               <div class="container-fluid">
+                                   <form class="form-comment" method="POST" action="./comment.php">
+            
+                                        <input type="text" name="articleId" class="article-id">
+                                       <textarea class="col-xs-12" name=\'commentaire\' id="commentaire"> </textarea>
+                                       
+                                       <input class="col-xs-12" id="submit-comment" type="submit" value="COMMENTER">
+            
+                                    </form>
+                                </div>
+                            </div>
+                       </div>
+                </div>
+                    ');
+
+            }
         ?>
+
+        <div class="zoneText">
+            <?php
+                include_once ('./afficheAllArticles.php');
+            ?>
+        </div>
 
 
     </main>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- Latest compiled and minified JavaScript permet d'utiliser les fonctionalité avancer de bootstrap -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript permet d'utiliser les fonctionalité avancer de bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
-<script>
- $(document).ready(function () {
-    $('.pop-up-button').click(function () {
-        $('.wrapper').toggleClass('show');
-        $('.wrapper-two').removeClass('show');
-        
-    });
-    $('.pop-up-button-sign-in').click(function () {
-        $('.wrapper-two').toggleClass('show');
-        $('.wrapper').removeClass('show');
-    });
-});
-</script>
+
+
+<!-- INTEGRATION DE POPUP.JS -->
+<script src="../js/popUp.js"></script>
+<script src="../js/comment.js"></script>
+<script src="../js/voir.js"></script>
+<script src="../js/categories.js"></script>
+
+
 
 </html>
